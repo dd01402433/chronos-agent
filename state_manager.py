@@ -26,7 +26,6 @@ class ChronosStateManager:
         timestamp = datetime.datetime.now().isoformat()
         state_json = json.dumps(state)
         meta_json = json.dumps(metadata) if metadata else "{}"
-        
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -51,33 +50,22 @@ class ChronosStateManager:
             cursor.execute("SELECT id, timestamp, step_name FROM snapshots ORDER BY id DESC")
             return cursor.fetchall()
 
-# Global instance for easy access
 chronos = ChronosStateManager()
 
 def chronos_checkpoint(step_name: str):
-    """
-    Decorator that automatically saves a snapshot of the 'state' argument 
-    after the function executes successfully.
-    """
     def decorator(func: Callable):
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            # We assume the first argument or a keyword argument 'state' is the state dictionary
+        def wrapper(args, *kwargs):
             state = None
             if args and isinstance(args[0], dict):
                 state = args[0]
             elif 'state' in kwargs:
                 state = kwargs['state']
-            
             if state is None:
-                raise TypeError(f"Function {func.__name__} decorated with @chronos_checkpoint must accept a 'state' dictionary.")
-
-            result = func(*args, **kwargs)
-            
-            # Save snapshot after successful execution
+                raise TypeError(f"Function {func.__name__} must accept a 'state' dictionary.")
+            result = func(args, *kwargs)
             snap_id = chronos.save_snapshot(step_name, state)
             print(f"📸 [Chronos] Checkpoint reached: {step_name} (ID: {snap_id})")
-            
             return result
         return wrapper
     return decorator
