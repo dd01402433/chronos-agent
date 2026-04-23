@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Modern Engineering Luxury Palette (OKLCH) */
+  --color-bg: oklch(12% 0.01 260);
+  --color-surface: oklch(20% 0.02 260 / 0.4);
+  --color-surface-bright: oklch(25% 0.02 260 / 0.6);
+  --color-accent: oklch(75% 0.15 160); /* Precision Green */
+  --color-accent-blue: oklch(65% 0.2 250); /* Electric Blue */
+  --color-text-primary: oklch(98% 0.01 260);
+  --color-text-secondary: oklch(75% 0.01 260);
+  --color-border: oklch(30% 0.02 260 / 0.5);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Mesh Gradient Background */
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 20% 30%, oklch(20% 0.1 260 / 0.3) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, oklch(20% 0.1 160 / 0.3) 0%, transparent 40%);
+}
+
+.glass-card {
+  @apply bg-[var(--color-surface)] backdrop-blur-xl border border-[var(--color-border)] transition-all duration-500;
+}
+
+.glass-card:hover {
+  @apply border-[var(--color-accent)] bg-[var(--color-surface-bright)];
+  box-shadow: 0 0 30px oklch(75% 0.15 160 / 0.1);
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-linear-to-b from-[var(--color-text-primary)] to-[var(--color-text-secondary)];
+}
+
+.btn-luxury {
+  @apply px-8 py-3 bg-[var(--color-accent)] text-[var(--color-bg)] font-bold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_oklch(75%_0.15_160/0.5)] active:scale-95;
+}
+
+.btn-outline {
+  @apply px-8 py-3 border border-[var(--color-border)] text-[var(--color-text-primary)] font-medium rounded-full backdrop-blur-md transition-all duration-300 hover:bg-[var(--color-surface)] hover:border-[var(--color-accent)];
+}
