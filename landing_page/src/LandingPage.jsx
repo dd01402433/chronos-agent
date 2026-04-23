@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-const Glow = ({ color, position }) => <div className={\fixed w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none z-[-1] ${position}\} style={{ backgroundColor: color }} />;
+const Glow = ({ color, position }) => <div className={`fixed w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none z-[-1] ${position}`} style={{ backgroundColor: color }} />;
 const BentoItem = ({ children, className = "", delay = 0 }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay }} className={\glass-card rounded-3xl p-8 ${className}\}>{children}</motion.div>
+  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay }} className={`glass-card rounded-3xl p-8 ${className}`}>{children}</motion.div>
 );
 const LandingPage = () => {
   return (

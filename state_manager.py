@@ -55,7 +55,7 @@ chronos = ChronosStateManager()
 def chronos_checkpoint(step_name: str):
     def decorator(func: Callable):
         @functools.wraps(func)
-        def wrapper(args, *kwargs):
+        def wrapper(*args, **kwargs):
             state = None
             if args and isinstance(args[0], dict):
                 state = args[0]
@@ -63,7 +63,7 @@ def chronos_checkpoint(step_name: str):
                 state = kwargs['state']
             if state is None:
                 raise TypeError(f"Function {func.__name__} must accept a 'state' dictionary.")
-            result = func(args, *kwargs)
+            result = func(*args, **kwargs)
             snap_id = chronos.save_snapshot(step_name, state)
             print(f"📸 [Chronos] Checkpoint reached: {step_name} (ID: {snap_id})")
             return result
