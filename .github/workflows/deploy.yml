@@ -18,18 +18,10 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: |
-          cd landing_page
-          npm install
-        # 如果你已经扁平化了，请把上面一行改为: npm install
+        run: npm install
 
       - name: Build Project
-        run: |
-          cd landing_page
-          npm run build
-        # 如果你已经扁平化了，请把上面一行改为: npm run build
+        run: npm run build
 
       - name: Deploy to Vercel
-        run: |
-          npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }}
-        # 注意：官方 CLI 只需要 TOKEN 和 ORG_ID 即可，PROJECT_ID 由 Vercel 自动匹配
+        run: npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }}
